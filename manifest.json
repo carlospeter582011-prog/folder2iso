@@ -1,0 +1,12 @@
+{
+  "name": "Folder to ISO — Local Converter",
+  "short_name": "Folder2ISO",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0E0F11",
+  "theme_color": "#0E0F11",
+  "description": "Converts a local folder into an ISO 9660 disk image entirely in your browser. No uploads.",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

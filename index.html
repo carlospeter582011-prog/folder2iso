@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folder → ISO · Local, offline converter</title>
+<meta name="description" content="Converts a folder into an ISO 9660 disk image entirely in your browser. No uploads, works offline.">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0E0F11">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      <span class="activity-light" id="activityLight"></span>
+      DRIVE ACTIVITY
+    </div>
+    <h1>Folder <span class="accent">→</span> ISO<br>right on your machine.</h1>
+    <p class="sub">Pick a folder and it's written to an ISO 9660 disk image <strong>locally in your browser</strong>. Nothing is uploaded — huge folders never touch your internet connection.</p>
+    <span class="badge" id="offlineBadge"><span class="dot"></span>Checking offline support…</span>
+  </header>
+
+  <div class="tray" id="tray" tabindex="0" role="button" aria-label="Choose or drop a folder">
+    <div class="tray-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#F4A83D" stroke-width="1.4">
+        <circle cx="12" cy="12" r="9.5"/>
+        <circle cx="12" cy="12" r="2.7"/>
+        <circle cx="12" cy="12" r="0.6" fill="#F4A83D"/>
+        <path d="M12 2.5v6.8M12 14.7v6.8" stroke-opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="tray-title">Drop a folder here</div>
+    <div class="tray-sub">or choose one from your device — nothing leaves it</div>
+    <div class="tray-buttons">
+      <button type="button" id="pickBtn" class="primary">Choose folder</button>
+    </div>
+    <input type="file" id="dirInput" multiple>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="manifest" id="manifest">
+    <div class="manifest-head">
+      <span>Selected: <span class="name" id="folderName">—</span></span>
+    </div>
+    <div class="manifest-stats">
+      <div><span class="stat-label">Files</span><span class="stat-value" id="statFiles">0</span></div>
+      <div><span class="stat-label">Folders</span><span class="stat-value" id="statDirs">0</span></div>
+      <div><span class="stat-label">Total size</span><span class="stat-value" id="statSize">0 B</span></div>
+    </div>
+    <div class="volume-label-row">
+      <label for="volumeLabel">VOLUME LABEL</label>
+      <input type="text" id="volumeLabel" maxlength="32" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="build-row">
+      <button type="button" id="buildBtn" class="primary" disabled>Build ISO &amp; save</button>
+    </div>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-head">
+      <span>Writing image…</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-phase" id="progressPhase">Preparing…</div>
+  </div>
+
+  <div class="done-wrap" id="doneWrap">
+    <div class="done-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/>
+      </svg>
+    </div>
+    <div class="done-text" id="doneText"></div>
+  </div>
+
+  <div class="how">
+    <h2>HOW THIS STAYS OFFLINE</h2>
+    <ol>
+      <li><strong>Nothing is uploaded.</strong> The folder is read with your browser's local File System APIs — its bytes never go over the network.</li>
+      <li><strong>The ISO 9660 image is assembled in JavaScript</strong>, right here in the tab, sector by sector.</li>
+      <li><strong>Large files stream to disk</strong> in 4MB chunks via the File System Access API, so multi-gigabyte folders don't need to fit in memory.</li>
+      <li><strong>The app itself is cached</strong> by a service worker after your first visit, so you can reload this page with no connection at all.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="./iso9660.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
